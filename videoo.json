@@ -1,0 +1,264 @@
+{
+  "1": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "49",
+        0
+      ],
+      "steps": 5,
+      "cfg": 1.5,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "normal",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "2",
+        0
+      ],
+      "positive": [
+        "3",
+        0
+      ],
+      "negative": [
+        "4",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced"
+  },
+  "2": {
+    "inputs": {
+      "ckpt_name": "turbovisionxlSuperFastXLBasedOnNew_tvxlV32Bakedvae.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple"
+  },
+  "3": {
+    "inputs": {
+      "text": "extreme close up on the helmet of the doom slayer, broken doom slayer helmet, photorealistic, doom slayer, doom eternal, raging face of the doom slayer, Hellwalker, incoming death, sharp neon sky filled with the souls of the deads, fog, neon spirits, realistic ghosts, blood on face, ultra realistic, eye blood, the death of a population, dread, unknown fear, enormous beings, hand painting, (masterpiece, realistic painting), green planets, glowing neon lines, the fear of Cthulhu, realistic photography, ultra realistic, biomechinical, biomachines, ((hnsrdlf style)), detailed reflections, dark atmosphere, gothic art, futuristic, realistic blood, realistic reflections, RTX graphic, HDR, ultra detailed, real blood, detailed sky, nightmare\n",
+      "clip": [
+        "2",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "4": {
+    "inputs": {
+      "text": "bad quality, bad anatomy, worst quality, low quality, low resolution, extra fingers, blur, blurry, ugly, wrong proportions, watermark, image artifacts, lowres, ugly, jpeg artifacts, deformed, noisy image\n",
+      "clip": [
+        "2",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "5": {
+    "inputs": {
+      "width": 544,
+      "height": 960,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "6": {
+    "inputs": {
+      "samples": [
+        "1",
+        0
+      ],
+      "vae": [
+        "2",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "26": {
+    "inputs": {
+      "upscale_factor": 2,
+      "steps": 1,
+      "temp_prefix": "",
+      "samples": [
+        "1",
+        0
+      ],
+      "upscaler": [
+        "27",
+        0
+      ]
+    },
+    "class_type": "IterativeLatentUpscale"
+  },
+  "27": {
+    "inputs": {
+      "scale_method": "bilinear",
+      "seed": [
+        "49",
+        0
+      ],
+      "steps": 5,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "normal",
+      "denoise": 0.6,
+      "use_tiled_vae": false,
+      "tile_size": 512,
+      "model": [
+        "29",
+        0
+      ],
+      "vae": [
+        "29",
+        2
+      ],
+      "positive": [
+        "42",
+        0
+      ],
+      "negative": [
+        "4",
+        0
+      ],
+      "upscale_model_opt": [
+        "28",
+        0
+      ]
+    },
+    "class_type": "PixelKSampleUpscalerProvider"
+  },
+  "28": {
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    },
+    "class_type": "UpscaleModelLoader"
+  },
+  "29": {
+    "inputs": {
+      "ckpt_name": "turbovisionxlSuperFastXLBasedOnNew_tvxlV32Bakedvae.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple"
+  },
+  "30": {
+    "inputs": {
+      "samples": [
+        "26",
+        0
+      ],
+      "vae": [
+        "29",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "42": {
+    "inputs": {
+      "strength": 0.5,
+      "conditioning": [
+        "3",
+        0
+      ],
+      "control_net": [
+        "46",
+        0
+      ],
+      "image": [
+        "60",
+        0
+      ]
+    },
+    "class_type": "ControlNetApply"
+  },
+  "46": {
+    "inputs": {
+      "control_net_name": "diffusers_xl_canny_full.safetensors"
+    },
+    "class_type": "ControlNetLoader"
+  },
+  "49": {
+    "inputs": {
+      "seed": 985057887861069
+    },
+    "class_type": "Seed Generator"
+  },
+  "51": {
+    "inputs": {
+      "samples": [
+        "1",
+        0
+      ],
+      "vae": [
+        "2",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "52": {
+    "inputs": {
+      "images": [
+        "51",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "56": {
+    "inputs": {
+      "output_path": "./videoo/[time(%Y-%m-%d)]",
+      "filename_prefix": "videoo",
+      "filename_delimiter": "_",
+      "filename_number_padding": 4,
+      "filename_number_start": "false",
+      "extension": "png",
+      "quality": 100,
+      "lossless_webp": "false",
+      "overwrite_mode": "false",
+      "show_history": "false",
+      "show_history_by_prefix": "true",
+      "embed_workflow": "true",
+      "show_previews": "true",
+      "images": [
+        "30",
+        0
+      ]
+    },
+    "class_type": "Image Save"
+  },
+  "60": {
+    "inputs": {
+      "low_threshold": 100,
+      "high_threshold": 200,
+      "resolution": 512,
+      "image": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "CannyEdgePreprocessor"
+  },
+  "61": {
+    "inputs": {
+      "images": [
+        "60",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "62": {
+    "inputs": {
+      "images": [
+        "30",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  }
+}
